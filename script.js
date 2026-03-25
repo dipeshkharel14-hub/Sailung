@@ -1,22 +1,36 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence } from "firebase/auth";
 
 const auth = getAuth();
 
-// This runs automatically whenever the app loads or the user state changes
+// 1. Set Persistence so you don't have to login every time the page refreshes
+setPersistence(auth, browserLocalPersistence)
+  .then(() => {
+    console.log("Session will persist.");
+  });
+
+// 2. The Login Function
+async function loginDipesh() {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, "dipeshkharel14@gmail.com", "Dipesh9860");
+    console.log("Welcome Captain Dipesh!");
+    // The Auth Observer (below) will handle the redirect automatically
+  } catch (error) {
+    console.error("Login Error:", error.code, error.message);
+    document.getElementById('auth-error').innerText = "Login failed: " + error.message;
+    document.getElementById('auth-error').classList.add('show');
+  }
+}
+
+// 3. The Auth Observer (Sticks the user to the app)
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    // User is signed in
-    console.log("Logged in as:", user.email);
-    
-    // Redirect to dashboard if they are on the login page
-    if (window.location.pathname.includes("login.html")) {
-        window.location.href = "dashboard.html";
+    if (user.email === "dipeshkharel14@gmail.com") {
+      // Redirect to your Admin Dashboard
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
+      document.getElementById('s-app').classList.add('on'); 
     }
   } else {
-    // No user is signed in, redirect to login if they try to access protected pages
-    if (window.location.pathname.includes("dashboard.html")) {
-        window.location.href = "login.html";
-    }
+    // Show login screen if not logged in
+    document.getElementById('s-auth').classList.add('on');
   }
 });
-
