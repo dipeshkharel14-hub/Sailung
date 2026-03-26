@@ -413,11 +413,11 @@ select.inp option{background:#061528;color:var(--tp);}
       <!-- SIGNUP -->
       <div id="af-signup" style="display:none;">
         <label class="lbl">Your Name</label>
-        <input class="inp" type="text" id="s-name" placeholder="Captain Jack…" maxlength="30" autocomplete="name">
+        <input class="inp" type="text" id="s-name" placeholder="username" maxlength="30" autocomplete="name">
         <label class="lbl">Email</label>
-        <input class="inp" type="email" id="s-email" placeholder="your@email.com" autocomplete="email">
+        <input class="inp" type="email" id="s-email" placeholder="g mail" autocomplete="email">
         <label class="lbl">Password</label>
-        <input class="inp" type="password" id="s-pass" placeholder="Min 6 characters" autocomplete="new-password">
+        <input class="inp" type="password" id="s-pass" placeholder="Min 8 characters" autocomplete="new-password">
         <div class="aerr" id="s-err"></div>
         <button class="btn btn-p btn-w" id="s-btn" onclick="doSignup()">⛵ Join the Crew</button>
       </div>
@@ -482,7 +482,7 @@ select.inp option{background:#061528;color:var(--tp);}
 
     <!-- ▸ UPLOAD -->
     <section class="section on" id="tab-upload">
-      <h2 class="stitle">Upload Your Clip</h2>
+      <h2 class="stitle">Upload Your video Clip</h2>
       <p class="ssub">Contribute to the shared vlog. Tag your clip so the auto-builder knows where it fits.</p>
       <div class="gc">
         <div class="upload-zone" id="upload-zone">
@@ -1611,7 +1611,7 @@ window.approveAll=async()=>{
   if(!pending.length){toast('No pending users!','info');return;}
   if(!confirm(`Approve all ${pending.length} pending users?`))return;
   await Promise.all(pending.map(u=>updateDoc(doc(db,'users',u.uid),{status:'approved'})));
-  toast(`✅ ${pending.length} users approved!`,'success');
+  toast(` ${pending.length} users approved!`,'success');
 };
 
 function renderDaresAdmin(){
